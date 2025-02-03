@@ -1,3 +1,4 @@
+```
 │── container/ # ECS-based API services
 │ ├── src/
 │ │ ├── endpoints/
@@ -10,3 +11,4 @@
 │ ├── scripts/ # Any scripts for container module
 │ ├── tsconfig.json
 │ ├── package.json
+```

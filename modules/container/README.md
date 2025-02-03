@@ -1,3 +1,4 @@
+```
 │── serverless/ # AWS Lambda-based functions
 │ ├── src/
 │ │ ├── functions/
@@ -12,3 +13,4 @@
 │ ├── tsconfig.json
 │ ├── package.json
 │
+```
