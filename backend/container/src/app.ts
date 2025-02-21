@@ -48,7 +48,7 @@ const apiDocs = generateApiDocs(app)
 app.use(
 	'/api-docs',
 	swaggerUi.serve as unknown as RequestHandler,
-	swaggerUi.setup(apiDocs),
+	swaggerUi.setup(apiDocs) as unknown as RequestHandler,
 )
 
 // Error handling should be last

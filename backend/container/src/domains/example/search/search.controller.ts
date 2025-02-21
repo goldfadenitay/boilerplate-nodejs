@@ -37,8 +37,12 @@ export const searchController: ControllerFn<SearchResponse> = Object.assign(
 	async (req: HttpRequest) => {
 		const validatedQuery = validate(searchQuery, {
 			filter: req.query['filter'],
-			limit: req.query['limit'],
-			page: req.query['page'],
+			limit: Number(req.query['limit'])
+				? Number(req.query['limit'])
+				: req.query['limit'],
+			page: Number(req.query['page'])
+				? Number(req.query['page'])
+				: req.query['page'],
 		})
 
 		return success({

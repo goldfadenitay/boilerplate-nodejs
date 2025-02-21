@@ -5,6 +5,7 @@ import {
 	ZodString,
 	ZodEnum,
 	ZodArray,
+	ZodOptional,
 } from 'zod'
 
 type OpenAPISchema = {
@@ -19,6 +20,11 @@ type OpenAPISchema = {
 }
 
 export const zodToOpenAPI = (schema: ZodType): OpenAPISchema => {
+	// Handle ZodOptional by unwrapping the inner type
+	if (schema instanceof ZodOptional) {
+		return zodToOpenAPI(schema._def.innerType)
+	}
+
 	if (schema instanceof ZodObject) {
 		const properties: Record<string, OpenAPISchema> = {}
 		const required: string[] = []

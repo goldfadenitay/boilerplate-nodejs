@@ -26,29 +26,48 @@ interface OpenAPISpec {
 	[key: string]: any
 }
 
-function collectRoutes(stack: Layer[]): Route[] {
-	const routes: Route[] = []
+interface RouteMetadata extends Route {
+	domain?: string
+	params?: Record<string, any>
+	query?: Record<string, any>
+	body?: Record<string, any>
+	responses?: Record<string, any>
+}
+
+function collectRoutes(stack: Layer[]): RouteMetadata[] {
+	const routes: RouteMetadata[] = []
 
 	stack.forEach((layer: Layer) => {
 		const path = layer.route?.path
 		const method = Object.keys(layer.route?.methods || {})[0]
 
 		if (isDefined(path) && isDefined(method)) {
-			routes.push({ path, method })
+			// Extract controller metadata if available
+			const handler = layer.route?.stack?.[0]?.handle
+			const metadata: RouteMetadata = {
+				path,
+				method,
+				params: handler?.params,
+				query: handler?.query,
+				body: handler?.body,
+				responses: handler?.responses,
+			}
+			routes.push(metadata)
 		} else if (layer.name === 'router' && layer.handle?.stack) {
-			// Nested routes in routers (like from domains folder)
-
 			const baseUrl = layer.regexp
 				.toString()
 				.replace('/^', '')
 				.replace('\\/?(?=\\/|$)/i', '')
 				.replace(/\\/g, '')
 
+			// Extract domain name from path
+			const domain = baseUrl.split('/').filter(Boolean)[1] // e.g., 'example' from '/api/example'
+
 			const nestedRoutes = collectRoutes(layer.handle.stack).map((route) => ({
+				...route,
 				path: `${baseUrl}${route.path}`,
-				method: route.method,
+				domain,
 			}))
-			console.log('nestedRoutes------', nestedRoutes)
 			routes.push(...nestedRoutes)
 		}
 	})
@@ -60,9 +79,9 @@ export const generateApiDocs = (app: Express) => {
 	const logger = createRequestLogger({} as Request)
 
 	try {
-		const routes = collectRoutes(app._router.stack).filter(
-			(r) => r.path && r.method,
-		)
+		const routes = collectRoutes(app._router.stack)
+			.filter((r) => r.path && r.method)
+			.sort((a, b) => (a.domain || '').localeCompare(b.domain || ''))
 
 		const specs = swaggerJsdoc({
 			definition: {
@@ -77,30 +96,61 @@ export const generateApiDocs = (app: Express) => {
 						description: 'Local server',
 					},
 				],
+				tags: [...new Set(routes.map((r) => r.domain))]
+					.filter((domain): domain is string => Boolean(domain))
+					.map((domain) => ({
+						name: domain,
+						description: `${domain} endpoints`,
+					})),
 			},
-			apis: ['./src/domains/**/*.ts'], // Path to the API docs
+			apis: ['./src/domains/**/*.ts'],
 		}) as OpenAPISpec
 
-		// Add routes to specs
-		routes.forEach(({ path, method }) => {
-			if (!specs.paths[path]) {
-				specs.paths[path] = {}
-			}
-			specs.paths[path][method] = {
-				summary: `${method.toUpperCase()} ${path}`,
-				responses: {
-					200: {
-						description: 'Successful response',
+		// Add routes to specs with domain tags
+		routes.forEach(
+			({ path, method, domain, params, query, body, responses }) => {
+				if (!specs.paths[path]) {
+					specs.paths[path] = {}
+				}
+
+				specs.paths[path][method] = {
+					tags: domain ? [domain] : undefined,
+					summary: `${method.toUpperCase()} ${path}`,
+					parameters: [
+						...(params
+							? Object.entries(params).map(([name, schema]) => ({
+									in: 'path',
+									name,
+									required: true,
+									schema,
+							  }))
+							: []),
+						...(query && isDefined(query['properties'])
+							? Object.entries(query['properties']).map(([key, value]) => ({
+									in: 'query',
+									name: key,
+									required: query['required']?.includes(key) ?? false,
+									schema: value,
+							  }))
+							: []),
+					],
+					...(body && {
+						requestBody: {
+							content: {
+								'application/json': {
+									schema: body,
+								},
+							},
+						},
+					}),
+					responses: responses || {
+						200: { description: 'Successful response' },
+						400: { description: 'Bad request' },
+						500: { description: 'Internal server error' },
 					},
-					400: {
-						description: 'Bad request',
-					},
-					500: {
-						description: 'Internal server error',
-					},
-				},
-			}
-		})
+				}
+			},
+		)
 
 		logger.info('API documentation generated successfully')
 		return specs
