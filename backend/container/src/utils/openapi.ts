@@ -12,6 +12,7 @@ interface RouteLayer {
 	route?: {
 		path: string
 		methods: Record<string, boolean>
+		stack: any[]
 	}
 }
 
@@ -27,7 +28,7 @@ interface OpenAPISpec {
 }
 
 interface RouteMetadata extends Route {
-	domain?: string
+	domain?: string | undefined
 	params?: Record<string, any>
 	query?: Record<string, any>
 	body?: Record<string, any>
@@ -43,9 +44,11 @@ function collectRoutes(stack: Layer[]): RouteMetadata[] {
 
 		if (isDefined(path) && isDefined(method)) {
 			// Extract controller metadata if available
+			const openApiPath = path.replace(/:([^/]+)/g, '{$1}')
 			const handler = layer.route?.stack?.[0]?.handle
+
 			const metadata: RouteMetadata = {
-				path,
+				path: openApiPath,
 				method,
 				params: handler?.params,
 				query: handler?.query,
@@ -113,24 +116,26 @@ export const generateApiDocs = (app: Express) => {
 					specs.paths[path] = {}
 				}
 
+				console.log('body!', body)
+
 				specs.paths[path][method] = {
 					tags: domain ? [domain] : undefined,
 					summary: `${method.toUpperCase()} ${path}`,
 					parameters: [
-						...(params
-							? Object.entries(params).map(([name, schema]) => ({
+						...(params && isDefined(params['properties'])
+							? Object.entries(params['properties']).map(([name, schema]) => ({
 									in: 'path',
 									name,
-									required: true,
+									required: params['required']?.includes(name) ?? false,
 									schema,
 							  }))
 							: []),
 						...(query && isDefined(query['properties'])
-							? Object.entries(query['properties']).map(([key, value]) => ({
+							? Object.entries(query['properties']).map(([name, schema]) => ({
 									in: 'query',
-									name: key,
-									required: query['required']?.includes(key) ?? false,
-									schema: value,
+									name,
+									required: query['required']?.includes(name) ?? false,
+									schema,
 							  }))
 							: []),
 					],

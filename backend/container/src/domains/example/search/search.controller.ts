@@ -8,21 +8,24 @@ import {
 } from '@/domains/example/search/search.types'
 import { HttpRequest } from '@/types/http'
 
-export const searchControllerMetadata = {
-	query: zodToOpenAPI(searchQuery),
-	responses: {
-		200: {
-			description: 'Search results',
-			content: {
-				'application/json': {
-					schema: {
-						type: 'object',
-						properties: {
-							message: { type: 'string' },
-							data: {
-								type: 'object',
-								properties: {
-									query: zodToOpenAPI(searchQuery),
+export const searchControllerMetadata = (() => {
+	const query = zodToOpenAPI(searchQuery)
+	return {
+		query,
+		responses: {
+			200: {
+				description: 'Search results',
+				content: {
+					'application/json': {
+						schema: {
+							type: 'object',
+							properties: {
+								message: { type: 'string' },
+								data: {
+									type: 'object',
+									properties: {
+										query,
+									},
 								},
 							},
 						},
@@ -30,24 +33,16 @@ export const searchControllerMetadata = {
 				},
 			},
 		},
-	},
-}
+	}
+})()
 
 export const searchController: ControllerFn<SearchResponse> = Object.assign(
 	async (req: HttpRequest) => {
-		const validatedQuery = validate(searchQuery, {
-			filter: req.query['filter'],
-			limit: Number(req.query['limit'])
-				? Number(req.query['limit'])
-				: req.query['limit'],
-			page: Number(req.query['page'])
-				? Number(req.query['page'])
-				: req.query['page'],
-		})
+		const query = validate(searchQuery, req.query)
 
 		return success({
 			message: 'Search successful',
-			data: { query: validatedQuery },
+			data: { query },
 		})
 	},
 	searchControllerMetadata,
