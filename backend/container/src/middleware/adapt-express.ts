@@ -5,7 +5,7 @@ import { AppError } from '@/utils/errors'
 import { tryCatch } from '@/utils/try-catch'
 
 export const adaptExpressRoute = (controller: Controller) => {
-	return async (
+	const handler = async (
 		req: Request,
 		res: Response,
 		next: NextFunction,
@@ -37,4 +37,12 @@ export const adaptExpressRoute = (controller: Controller) => {
 
 		res.status(httpResponse.statusCode).json(httpResponse.body)
 	}
+
+	// Attach metadata for OpenAPI docs
+	handler.params = controller.params
+	handler.query = controller.query
+	handler.body = controller.body
+	handler.responses = controller.responses
+
+	return handler
 }

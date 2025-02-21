@@ -1,17 +1,14 @@
 import { z } from 'zod'
 
 export const searchQuery = z.object({
-	filter: z.string().optional(),
-	limit: z.coerce
+	filter: z.string().optional().describe('Search filter text'),
+	limit: z
 		.number()
-		.int('Limit must be an integer')
-		.positive('Limit must be positive')
-		.optional(),
-	page: z.coerce
-		.number()
-		.int('Page must be an integer')
-		.positive('Page must be positive')
-		.optional(),
+		.min(1)
+		.max(100)
+		.optional()
+		.describe('Number of results per page'),
+	page: z.number().min(1).optional().describe('Page number'),
 })
 
 export type SearchQuery = z.infer<typeof searchQuery>
