@@ -116,8 +116,6 @@ export const generateApiDocs = (app: Express) => {
 					specs.paths[path] = {}
 				}
 
-				console.log('body!', body)
-
 				specs.paths[path][method] = {
 					tags: domain ? [domain] : undefined,
 					summary: `${method.toUpperCase()} ${path}`,
