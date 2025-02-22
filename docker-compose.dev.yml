@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Backend services
   backend:
     container_name: backend-container
     restart: always
@@ -16,20 +17,19 @@ services:
     environment:
       - NODE_ENV=development
     command: npm run dev
-  # volumes:
-  #   exclude:
-  # volumes:
-  #   - ./backend/container:/app
-  #   - /app/node_modules
-  # environment:
-  #   - NODE_ENV=development
-  #   - PORT=3000
-  #   - DATABASE_URL=${DATABASE_URL:-mongodb://localhost:27017/dev}
-  #   - JWT_SECRET=${JWT_SECRET:-dev_secret}
-  #   - CORS_ORIGIN=*
-  # command: npm run dev
-  # healthcheck:
-  #   test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
-  #   interval: 30s
-  #   timeout: 10s
-  #   retries: 3
+
+  # Vue frontend
+  vue-frontend:
+    build:
+      target: development
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  # React frontend
+  react-frontend:
+    build:
+      target: development
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
