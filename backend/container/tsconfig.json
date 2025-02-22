@@ -7,7 +7,7 @@
 		"moduleResolution": "node",
 
 		/* Paths */
-		"rootDir": "src",
+		"rootDir": ".",
 		"outDir": "dist",
 		"baseUrl": "src",
 		"paths": {
@@ -44,6 +44,6 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*.ts", "vite.config.ts"],
 	"exclude": ["node_modules", "dist"]
 }

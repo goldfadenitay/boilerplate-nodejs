@@ -31,7 +31,6 @@ export const createControllerMetadata = (() => {
 export const createController: ControllerFn<CreateResponse> = Object.assign(
 	async (req: HttpRequest) => {
 		const body = validate(createBody, req.body)
-
 		return success({
 			message: 'Create successful',
 			data: { body },
