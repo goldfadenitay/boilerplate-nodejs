@@ -8,7 +8,7 @@ import { HttpRequest } from '@/types/http'
 export const searchUsersController: ControllerFn<SearchUsersResponse> =
 	async (req: HttpRequest) => {
 		const query = validate(searchUsersQuery, req.query)
-		const users = await searchUsersService.execute(query)
+		const users = await searchUsersService(query)
 
 		return success({
 			message: 'Users found successfully',

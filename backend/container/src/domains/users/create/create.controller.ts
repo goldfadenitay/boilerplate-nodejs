@@ -8,7 +8,7 @@ import { HttpRequest } from '@/types/http'
 export const createUserController: ControllerFn<CreateUserResponse> =
 	async (req: HttpRequest) => {
 		const body = validate(createUserBody, req.body)
-		const user = await createUserService.execute(body)
+		const user = await createUserService(body)
 
 		return created({
 			message: 'User created successfully',
