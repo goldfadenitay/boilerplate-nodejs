@@ -5,10 +5,11 @@ import { useSearchUsers, useCreateUser } from './composables/useUsers'
 // Search form
 const searchRole = ref('')
 const searchStatus = ref('')
-const { data: searchResults, isLoading: isSearching } = useSearchUsers(
-  searchRole.value,
-  searchStatus.value
-)
+const {
+  data: searchResults,
+  isLoading: isSearching,
+  refetch: searchUsers,
+} = useSearchUsers(searchRole.value, searchStatus.value)
 
 // Create form
 const newUser = ref({
@@ -19,7 +20,7 @@ const newUser = ref({
 const createUser = useCreateUser()
 
 const handleSearch = () => {
-  searchResults.value?.refetch()
+  searchUsers() // TODO: Fix this
 }
 
 const handleCreate = async () => {
@@ -47,6 +48,7 @@ const handleCreate = async () => {
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             />
           </div>
+          {{ searchRole }}
           <div>
             <label class="block text-sm font-medium text-gray-700"
               >Status</label
