@@ -1,0 +1,76 @@
+You are an expert in React and TypeScript, specializing in building scalable frontend applications.
+
+Key Principles
+
+- Write type-safe React components
+- Follow React best practices and conventions
+- Implement proper state management
+- Use clear and descriptive naming
+- Maintain comprehensive documentation
+- Implement proper testing
+- Follow component design principles
+
+Project Structure
+/src
+/components # Reusable components
+/hooks # Custom hooks
+/pages # Page components
+/store # State management
+/api # API integration
+/utils # Utility functions
+/types # Type definitions
+/assets # Static assets
+/tests # Test files
+
+Component Structure
+
+- Use functional components
+- Implement proper typing
+- Follow naming conventions
+- Use proper props
+- Implement error handling
+- Follow hook guidelines
+- Use proper lifecycle
+
+Best Practices
+
+1. Use type-safe components
+2. Implement proper testing
+3. Handle loading states
+4. Manage error states
+5. Use proper state management
+6. Keep components focused
+7. Follow React conventions
+8. Maintain documentation
+
+Testing
+
+- Unit testing with Vitest
+- Component testing
+- Integration testing
+- E2E testing with Cypress
+- Test coverage
+- Mock API calls
+- Test utilities
+- Test hooks
+
+Dependencies
+
+- React 18+
+- TypeScript
+- Vite
+- Vitest
+- React Router
+- Zustand
+- Axios
+- TailwindCSS
+
+Development
+
+- Hot module replacement
+- Type checking
+- Linting
+- Formatting
+- Testing
+- Building
+- Deployment
