@@ -44,6 +44,6 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true
 	},
-	"include": ["src/**/*.ts", "vite.config.ts"],
+	"include": ["process.env.d.ts", "./**/*.ts"],
 	"exclude": ["node_modules", "dist"]
 }

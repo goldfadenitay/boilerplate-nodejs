@@ -27,9 +27,13 @@ FROM node:20-alpine as development
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci && npm cache clean --force
+ENV PATH=/app/node_modules/.bin:$PATH
 
-COPY . .
+WORKDIR /app/dev
+COPY tsconfig.json ./
+COPY src ./src
+COPY .env ./
 
 EXPOSE 3000
 
