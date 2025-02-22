@@ -8,10 +8,9 @@ export const errorHandler = (
 	error: Error,
 	_req: Request,
 	res: Response,
-	_next: NextFunction,
+	_: NextFunction,
 ): void => {
 	console.error('Error:', error)
-	console.log('here?', error)
 
 	if (error instanceof AppError) {
 		res.status(error.statusCode).json({

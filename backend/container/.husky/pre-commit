@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint checks
+npm run lint
+
+# Run type checks
+npm run type-check
+
+# Run tests (optional)
+# npm test
+
+# Check custom monorepo rules
+node scripts/validate-monorepo.ts

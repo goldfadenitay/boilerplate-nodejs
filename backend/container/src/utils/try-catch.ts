@@ -14,6 +14,7 @@ export const tryCatch = <TCallback extends Callback>(
 
 		if (result instanceof Promise) {
 			return result
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				.then((rx) => [null, rx])
 				.catch((e) => [e, null]) as MaybeAsyncResult<ReturnType<TCallback>>
 		}

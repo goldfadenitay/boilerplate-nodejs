@@ -2,11 +2,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { Request, Response, NextFunction } from 'express'
 
 // Extend Express Request type to include id
-declare global {
-	namespace Express {
-		interface Request {
+declare module 'express' {
+	interface Request {
 			requestId?: string
-		}
 	}
 }
 
@@ -21,7 +19,7 @@ export const addRequestId = (
 	req: Request,
 	res: Response,
 	next: NextFunction,
-) => {
+): void => {
 	const reqWithId = withRequestId(req)
 	res.setHeader('X-Request-ID', reqWithId.requestId)
 	next()

@@ -1,7 +1,7 @@
 import cors, { CorsOptions } from 'cors'
 import { AppError } from '@/utils/errors'
 import { createRequestLogger } from '@/utils/logger'
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction, RequestHandler } from 'express'
 
 const createCorsOptions = (options: Partial<CorsOptions>): CorsOptions => ({
 	origin: options.origin || '*',
@@ -12,7 +12,7 @@ const createCorsOptions = (options: Partial<CorsOptions>): CorsOptions => ({
 	optionsSuccessStatus: 204,
 })
 
-export const corsMiddleware = (options: Partial<CorsOptions> = {}) => {
+export const corsMiddleware = (options: Partial<CorsOptions> = {}): RequestHandler[] => {
 	const corsOptions = createCorsOptions(options)
 
 	return [

@@ -32,7 +32,11 @@ export type LogContext = {
 	error?: Error
 }
 
-export const createRequestLogger = (req: Request, startTime = Date.now()) => {
+export const createRequestLogger = (req: Request, startTime = Date.now()): {
+	info: (message: string, context: Partial<LogContext>) => void
+	error: (message: string, context: Partial<LogContext>, error?: Error) => void
+	end: (res: Response) => void
+} => {
 	const baseContext = {
 		requestId: req.requestId,
 		method: req.method,
@@ -45,8 +49,8 @@ export const createRequestLogger = (req: Request, startTime = Date.now()) => {
 		},
 		error: (
 			message: string,
-			error?: Error,
 			context: Partial<LogContext> = {},
+			error?: Error,
 		) => {
 			logger.error(message, {
 				...baseContext,
@@ -55,7 +59,7 @@ export const createRequestLogger = (req: Request, startTime = Date.now()) => {
 					? {
 							message: error.message,
 							stack: error.stack,
-					  }
+					}
 					: undefined,
 			})
 		},

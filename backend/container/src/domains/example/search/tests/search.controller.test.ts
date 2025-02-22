@@ -41,6 +41,6 @@ describe('searchController', () => {
 		const response = await searchController(request)
 
 		expect(response.statusCode).toBe(200)
-		expect(response.body.data.query).toEqual({})
+		expect((response.body as { data: { query: Record<string, unknown> } }).data.query).toEqual({})
 	})
 })

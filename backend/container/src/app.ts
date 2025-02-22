@@ -4,10 +4,9 @@ import { performanceMonitor } from '@/middleware/performance'
 import { addRequestId } from '@/middleware/request-id'
 import { defaultRateLimiter } from '@/middleware/rate-limit'
 import { corsMiddleware } from '@/middleware/cors'
-import { generateApiDocs } from './utils/openapi'
-import swaggerUi from 'swagger-ui-express'
 import exampleRouter from '@/domains/example/example.routes'
 import os from 'os'
+import usersRoutes from '@/domains/users/users.routes'
 
 const app = express()
 
@@ -40,14 +39,7 @@ app.get('/health', (_req, res) => {
 
 // Routes
 app.use('/api/example', exampleRouter)
-
-// API Documentation
-const apiDocs = generateApiDocs(app)
-app.use(
-	'/api-docs',
-	swaggerUi.serve as unknown as RequestHandler,
-	swaggerUi.setup(apiDocs) as unknown as RequestHandler,
-)
+app.use('/api/users', usersRoutes)
 
 // Error handling should be last
 app.use(errorHandler)

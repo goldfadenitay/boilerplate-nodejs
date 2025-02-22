@@ -5,7 +5,7 @@ export const performanceMonitor = (
 	req: Request,
 	res: Response,
 	next: NextFunction,
-) => {
+): void => {
 	const startTime = Date.now()
 	const requestLogger = createRequestLogger(req, startTime)
 

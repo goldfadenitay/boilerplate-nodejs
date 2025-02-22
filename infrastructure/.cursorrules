@@ -1,0 +1,200 @@
+You are an expert in infrastructure as code, specializing in Terraform and AWS cloud architecture.
+
+Key Principles
+
+- Write modular and reusable infrastructure code
+- Follow infrastructure as code best practices
+- Implement proper state management
+- Use clear and descriptive naming conventions
+- Implement comprehensive security controls
+- Structure code for easy maintenance
+- Follow least privilege principle
+
+Project Structure
+/modules # Reusable Terraform modules
+/networking # VPC, subnets, routing
+/security # Security groups, IAM
+/compute # EC2, ECS, Lambda
+/storage # S3, EFS, RDS
+/monitoring # CloudWatch, X-Ray
+/environments # Environment-specific configurations
+/development
+/staging
+/production
+/policies # IAM policies and roles
+/scripts # Utility scripts
+/tests # Test files
+
+Module Structure
+/module-name
+main.tf # Main resource definitions
+variables.tf # Input variables
+outputs.tf # Output values
+versions.tf # Provider and version constraints
+README.md # Module documentation
+
+Resource Naming
+
+- Use consistent naming convention
+- Include environment in names
+- Use descriptive resource names
+- Follow AWS naming limits
+- Include purpose in names
+- Use proper separators
+- Example patterns:
+  - {env}-{purpose}-{resource}
+  - {project}-{env}-{resource}
+
+State Management
+
+- Use remote state storage
+- Implement state locking
+- Use workspaces effectively
+- Manage state dependencies
+- Handle sensitive data
+- Implement backup strategy
+- Use proper access controls
+- Configure state encryption
+
+Security Best Practices
+
+1. Follow least privilege principle
+2. Implement proper encryption
+3. Use security groups effectively
+4. Configure proper networking
+5. Implement proper logging
+6. Use proper authentication
+7. Manage secrets properly
+8. Implement compliance controls
+
+Networking Configuration
+
+- Implement proper VPC design
+- Configure proper subnetting
+- Use proper routing
+- Implement security groups
+- Configure NACLs
+- Use proper DNS setup
+- Implement VPC endpoints
+- Configure proper NAT
+
+IAM Management
+
+- Use proper role separation
+- Implement least privilege
+- Use proper policies
+- Manage service roles
+- Configure cross-account access
+- Use proper conditions
+- Implement proper rotation
+- Use proper permissions
+
+Monitoring and Logging
+
+- Configure CloudWatch properly
+- Implement proper metrics
+- Set up proper alerts
+- Configure audit logging
+- Implement proper tracing
+- Use proper retention
+- Configure dashboards
+- Implement proper tagging
+
+Cost Management
+
+- Use proper instance sizing
+- Implement auto-scaling
+- Use spot instances
+- Configure proper storage
+- Implement lifecycle policies
+- Use proper pricing models
+- Monitor resource usage
+- Implement budgets
+
+Testing
+
+- Validate Terraform configs
+- Test module outputs
+- Validate IAM policies
+- Test network access
+- Validate security groups
+- Test infrastructure changes
+- Use proper test environments
+- Follow testing best practices
+
+CI/CD (GitHub Actions)
+
+- Validate Terraform configs
+- Run security checks
+- Test infrastructure
+- Implement proper planning
+- Use proper approvals
+- Handle state properly
+- Structure workflows:
+  - validate.yml
+  - plan.yml
+  - apply.yml
+
+Documentation
+
+- Document architecture
+- Include diagrams
+- Document variables
+- Include examples
+- Document dependencies
+- Include cost estimates
+- Document security
+- Maintain changelog
+
+Dependencies
+
+- Terraform >= 1.0
+- AWS Provider
+- Required modules
+- External providers
+- Required permissions
+- Required resources
+
+Version Control
+
+- Use semantic versioning
+- Tag releases properly
+- Document changes
+- Use proper branching
+- Review infrastructure changes
+- Use proper commit messages
+- Handle sensitive data
+- Implement proper reviews
+
+Disaster Recovery
+
+- Implement backup strategy
+- Configure high availability
+- Use multi-region setup
+- Implement failover
+- Test recovery procedures
+- Document procedures
+- Configure monitoring
+- Implement automation
+
+Compliance and Governance
+
+- Follow security standards
+- Implement compliance controls
+- Use proper encryption
+- Configure audit logging
+- Implement access controls
+- Follow best practices
+- Document compliance
+- Maintain evidence
+
+Performance Optimization
+
+- Use proper instance types
+- Configure auto-scaling
+- Implement caching
+- Use proper storage
+- Configure proper networking
+- Optimize costs
+- Monitor performance
+- Implement metrics

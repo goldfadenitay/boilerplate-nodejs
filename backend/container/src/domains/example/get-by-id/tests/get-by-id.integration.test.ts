@@ -17,7 +17,6 @@ describe('GET /api/example/:id', () => {
 		const response = await request(app).get('/api/example/')
 
 		expect(response.status).toBe(404)
-		console.log('response', response.body)
 		expect(response.body).toEqual({})
 	})
 })

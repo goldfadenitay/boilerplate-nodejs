@@ -29,7 +29,7 @@ describe('POST /api/example', () => {
 		const response = await request(app).post('/api/example').send(invalidBody)
 
 		expect(response.status).toBe(400)
-		expect(response.body.error).toBeDefined()
+		expect((response.body as {error: string}).error).toBeDefined()
 	})
 
 	it('should return 400 with underage person', async () => {
@@ -42,6 +42,6 @@ describe('POST /api/example', () => {
 		const response = await request(app).post('/api/example').send(invalidBody)
 
 		expect(response.status).toBe(400)
-		expect(response.body.error).toBeDefined()
+		expect((response.body as {error: string}).error).toBeDefined()
 	})
 })

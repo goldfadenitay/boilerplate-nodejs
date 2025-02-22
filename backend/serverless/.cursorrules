@@ -1,0 +1,165 @@
+You are an expert in TypeScript, AWS Lambda, and serverless architectures, specializing in scalable cloud-native applications.
+
+Key Principles
+
+- Write type-safe, modular Lambda functions using TypeScript
+- Follow clean architecture principles and SOLID design patterns
+- Implement comprehensive error handling and logging
+- Use dependency injection where applicable
+- Maintain clear separation of concerns
+- Write unit tests and integration tests for Lambda functions
+- Follow consistent naming conventions and code organization
+
+TypeScript Configuration
+
+- Enable strict mode in tsconfig.json
+- Use explicit type declarations over 'any'
+- Leverage TypeScript's advanced features (generics, utility types)
+- Implement proper error handling with custom error classes
+- Use async/await for asynchronous operations
+- Follow naming conventions:
+  - Interfaces: HandlerService
+  - Types: Config
+  - Enums: EventType
+  - Classes: LambdaHandler
+  - Constants: MAXIMUM_RETRY_ATTEMPTS
+  - Variables: eventProcessor
+
+Project Structure
+/src
+/config # Configuration files
+/domains # Domain-specific code
+/domains/purpose # Domain-specific code. Could be an endpoint, a job, or a creon job.
+/domains/purpose/function-name # Lambda function specific code
+handler.ts # Lambda handler
+service.ts # Business logic
+types.ts # Type definitions
+schema.ts # Input/output schemas
+/tests
+handler.test.ts
+service.test.ts
+integration.test.ts
+/middleware # Lambda middleware
+/utils # Utility functions
+/types # Shared TypeScript types
+/infrastructure # Terraform configurations
+
+Lambda Handler Structure
+
+- Implement proper middleware chain
+- Use typed event/context objects
+- Structure handlers using middleware pattern
+- Implement error handling middleware
+- Use schema validation (Zod)
+- Apply security best practices:
+  - Input validation
+  - Proper IAM roles
+  - Environment variables
+  - Secrets management
+  - Request validation
+
+Lambda Configuration
+
+- Configure memory and timeout appropriately
+- Implement proper cold start optimization
+- Use environment variables
+- Configure proper IAM roles
+- Implement proper error handling
+- Use AWS X-Ray for tracing
+- Configure CloudWatch logs
+- Implement proper retry strategies
+
+Terraform
+
+- Follow infrastructure as code principles
+- Use workspaces for environment separation
+- Implement state management with S3 backend
+- Follow naming conventions for resources
+- Use variables and outputs effectively
+- Implement proper tagging strategy
+- Structure Terraform files:
+  /infrastructure
+  /modules
+  /environments
+  main.tf
+  variables.tf
+  outputs.tf
+
+CI/CD (GitHub Actions)
+
+- Implement automated testing
+- Configure linting and type checking
+- Set up Lambda deployments
+- Implement infrastructure deployment
+- Configure environment-specific workflows
+- Implement security scanning
+- Structure workflows:
+  - build.yml
+  - test.yml
+  - deploy.yml
+
+Vite Configuration
+
+- Configure for TypeScript support
+- Optimize Lambda bundle size
+- Set up environment variables
+- Configure build targets
+- Structure build output
+- Implement tree shaking
+- Configure external dependencies
+
+Best Practices
+
+1. Keep functions focused and small
+2. Implement comprehensive logging
+3. Use environment-based configuration
+4. Implement proper error handling
+5. Follow AWS Lambda best practices
+6. Use proper status codes and error responses
+7. Implement proper timeout handling
+8. Use connection pooling when applicable
+9. Implement proper caching strategies
+10. Follow security best practices
+
+Testing
+
+- Use Vitest for unit testing
+- Implement integration tests
+- Use AWS SDK mocking
+- Mock external dependencies
+- Maintain test coverage thresholds
+- Structure test files alongside source code
+- Follow AAA pattern (Arrange-Act-Assert)
+
+Linting and Formatting
+
+- ESLint with TypeScript support
+- Prettier for code formatting
+- Husky for pre-commit hooks
+- Enforce consistent code style
+- Configure import sorting
+- Implement maximum line length
+- Enforce naming conventions
+
+Dependencies
+
+- AWS SDK for Lambda
+- TypeScript for type safety
+- Vitest for testing
+- Winston for logging
+- Zod for schema validation
+- Middy for middleware
+- aws-xray-sdk for tracing
+
+AWS Services Integration
+
+- Use AWS SDK v3
+- Implement proper error handling
+- Use proper IAM roles
+- Configure service integrations:
+  - DynamoDB
+  - S3
+  - SQS
+  - EventBridge
+  - CloudWatch
+  - X-Ray

@@ -30,6 +30,6 @@ describe('GET /api/example/search', () => {
 		})
 
 		expect(response.status).toBe(400)
-		expect(response.body.error).toBeDefined()
+		expect((response.body as {error: string}).error).toBeDefined()
 	})
 })
