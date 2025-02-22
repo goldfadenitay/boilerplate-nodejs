@@ -1,18 +1,20 @@
 import { useQuery, useMutation } from '@tanstack/vue-query'
 import axios from 'axios'
+import { Ref } from 'vue'
 
 const API_URL = 'http://localhost:3000/api'
 
-export function useSearchUsers(role: string, status: string) {
+export function useSearchUsers(role: Ref<string>, status: Ref<string>) {
   return useQuery({
-    queryKey: ['users', { role, status }],
+    queryKey: [role, status],
     queryFn: async () => {
-      console.log('searchUsers', role, status)
+      console.log('searchUsers', role.value, status.value)
       const { data } = await axios.get(`${API_URL}/users/search`, {
-        params: { role, status },
+        params: { role: role.value, status: status.value },
       })
       return data
     },
+    enabled: !!role.value || !!status.value,
   })
 }
 

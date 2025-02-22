@@ -9,7 +9,7 @@ const {
   data: searchResults,
   isLoading: isSearching,
   refetch: searchUsers,
-} = useSearchUsers(searchRole.value, searchStatus.value)
+} = useSearchUsers(searchRole, searchStatus)
 
 // Create form
 const newUser = ref({
@@ -20,7 +20,7 @@ const newUser = ref({
 const createUser = useCreateUser()
 
 const handleSearch = () => {
-  searchUsers() // TODO: Fix this
+  searchUsers()
 }
 
 const handleCreate = async () => {
@@ -48,7 +48,6 @@ const handleCreate = async () => {
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             />
           </div>
-          {{ searchRole }}
           <div>
             <label class="block text-sm font-medium text-gray-700"
               >Status</label
@@ -72,11 +71,11 @@ const handleCreate = async () => {
         </form>
 
         <!-- Search Results -->
-        <div v-if="searchResults?.users" class="mt-6">
+        <div v-if="searchResults?.data?.users" class="mt-6">
           <h3 class="text-lg font-medium mb-2">Results:</h3>
           <div class="space-y-2">
             <div
-              v-for="user in searchResults.users"
+              v-for="user in searchResults.data.users"
               :key="user.id"
               class="border p-4 rounded"
             >
@@ -129,9 +128,9 @@ const handleCreate = async () => {
           <button
             type="submit"
             class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            :disabled="createUser.isPending"
+            :disabled="createUser.isPending.value"
           >
-            {{ createUser.isPending ? 'Creating...' : 'Create User' }}
+            {{ createUser.isPending.value ? 'Creating...' : 'Create User' }}
           </button>
         </form>
 
