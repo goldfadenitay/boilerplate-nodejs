@@ -3,7 +3,6 @@
 	"version": "0.0.1",
 	"description": "The purpose of this template is purely for experimenting and playing around",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"prepare": "husky install",
 		"container:dev": "cd backend/container && npm run dev",
 		"container:build": "cd backend/container && npm run build",
@@ -18,19 +17,8 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/goldfadenitay/boilerplate-nodejs/issues"
-	},
-	"homepage": "https://github.com/goldfadenitay/boilerplate-nodejs#readme",
 	"devDependencies": {
-		"@types/node": "^22.13.0",
 		"husky": "^8.0.0",
-		"typescript": "^5.7.3",
-		"eslint": "^8.56.0",
-		"@typescript-eslint/parser": "^7.0.0",
-		"@typescript-eslint/eslint-plugin": "^7.0.0",
-		"eslint-config-prettier": "^9.1.0",
 		"prettier": "^3.2.0"
 	}
 }

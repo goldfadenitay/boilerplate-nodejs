@@ -1,0 +1,17 @@
+{
+  "name": "@shared/utils",
+  "version": "1.0.0",
+  "description": "Shared utilities for TypeScript projects",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "vitest": "^0.34.6",
+    "winston": "^3.17.0"
+  }
+}
