@@ -4,11 +4,13 @@ import { useSearchUsers, useCreateUser } from './hooks/useUsers'
 function App() {
   // Search form state
   const [searchRole, setSearchRole] = useState('')
+  const [shouldFetch, setShouldFetch] = useState(false)
   const [searchStatus, setSearchStatus] = useState('')
-  const { data: searchResults, isLoading: isSearching } = useSearchUsers(
-    searchRole,
-    searchStatus
-  )
+  const {
+    data: searchResults,
+    isLoading: isSearching,
+    refetch: searchUsers,
+  } = useSearchUsers(searchRole, searchStatus, shouldFetch)
 
   // Create form state
   const [newUser, setNewUser] = useState({
@@ -20,7 +22,9 @@ function App() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    searchResults?.refetch()
+    setShouldFetch(true)
+    searchUsers()
+    setShouldFetch(false)
   }
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -75,11 +79,11 @@ function App() {
           </form>
 
           {/* Search Results */}
-          {searchResults?.users && (
+          {searchResults?.data?.users && (
             <div className="mt-6">
               <h3 className="text-lg font-medium mb-2">Results:</h3>
               <div className="space-y-2">
-                {searchResults.users.map(user => (
+                {searchResults.data.users.map((user: User) => (
                   <div key={user.id} className="border p-4 rounded">
                     <div className="flex items-center gap-4">
                       <img

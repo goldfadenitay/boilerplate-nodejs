@@ -3,15 +3,20 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:3000/api'
 
-export function useSearchUsers(role: string, status: string) {
+export function useSearchUsers(
+  role: string,
+  status: string,
+  shouldFetch: boolean
+) {
   return useQuery({
-    queryKey: ['users', { role, status }],
+    queryKey: [role, status],
     queryFn: async () => {
       const { data } = await axios.get(`${API_URL}/users/search`, {
         params: { role, status },
       })
       return data
     },
+    enabled: shouldFetch,
   })
 }
 

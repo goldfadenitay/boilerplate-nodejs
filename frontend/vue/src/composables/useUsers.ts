@@ -8,7 +8,6 @@ export function useSearchUsers(role: Ref<string>, status: Ref<string>) {
   return useQuery({
     queryKey: [role, status],
     queryFn: async () => {
-      console.log('searchUsers', role.value, status.value)
       const { data } = await axios.get(`${API_URL}/users/search`, {
         params: { role: role.value, status: status.value },
       })
