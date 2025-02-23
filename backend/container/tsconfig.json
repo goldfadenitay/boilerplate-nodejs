@@ -7,8 +7,8 @@
 		"moduleResolution": "node",
 
 		/* Paths */
-		"rootDir": ".",
-		"outDir": "dist",
+		"rootDir": "./src",
+		"outDir": "./dist",
 		"baseUrl": "src",
 		"paths": {
 			"@/*": ["./*"]
@@ -44,6 +44,9 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true
 	},
-	"include": ["process.env.d.ts", "./**/*.ts"],
+	"include": [
+		"src/**/*",
+		"../../database/postgres-service/shared/prsima-client.ts"
+	],
 	"exclude": ["node_modules", "dist"]
 }
